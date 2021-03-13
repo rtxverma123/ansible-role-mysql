@@ -1,0 +1,26 @@
+---
+# tasks file for mysql_db
+- name: Install Mysql database
+  yum: 
+    name: {{ item }} 
+    state: present
+  with_items: 
+      - mysql-server
+      - mysql-client
+    
+- name: Start sql 
+  service: 
+    name: mysql
+    state: started
+    enabled: yes
+     
+- name: create Application database
+  mysql_db: 
+     name: {{ db_name }} 
+     state: present
+
+- name: database ansible_user
+  mysql_user: 
+     name: "{{ db_user}} "
+     password: "{{ db_password }} "
+     state: present
